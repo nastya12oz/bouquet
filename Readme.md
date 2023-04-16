@@ -1,6 +1,6 @@
-# Проект «{{projectTitle}}»
+# Проект « Bouquet»
 
-* Студент: [{{userName}}]({{userProfile}}).
+* Студент: [{Анастасия Часовских](https://github.com/nastya12oz).
 
 ---
 
