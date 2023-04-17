@@ -5,19 +5,7 @@ import { iosVhFix } from './utils/ios-vh-fix';
 import { modals, initModals } from './modals/init-modals';
 
 // Ваши импорты...
-import { render } from './framework/render.js';
-import HeroView from './view/hero-view';
-import MissionView from './view/mission-view';
-import AdvantagesView from './view/advantages-view.js';
-import FilterReasonView from './view/filter-reason-view.js';
-import FilterColorView from './view/filter-color-view.js';
-import CatalogueView from './view/catalogue-view.js';
-import CatalogueSortView from './view/catalogue-sort-view.js';
-import CatalogueCardsListView from './view/catalogue-cards-list-view';
-import CardView from './view/card-view';
-import CatalogueButtonWrapView from './view/catalogue-button-wrap-view.js';
-import ShowMoreButtonView from './view/show-more-button-view.js';
-import toTopButtonView from './view/to-top-button-view.js';
+import BoardPresenter from './presenter/board-presenter';
 
 // Код для работы попапов, не удаляйте его
 window.addEventListener('DOMContentLoaded', () => {
@@ -48,30 +36,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const mainElement = document.querySelector('main');
 
-  render(new HeroView(), mainElement);
-  render(new MissionView, mainElement);
-  render(new AdvantagesView, mainElement);
-  render(new FilterReasonView, mainElement);
-  render(new FilterColorView, mainElement);
-  render(new CatalogueView(), mainElement);
+  const boardPresenter = new BoardPresenter({
+    boardContainer: mainElement
+  });
 
-  const catalogueElement = document.querySelector('.catalogue');
-  const containerCatalogueElement = catalogueElement.querySelector('.container');
-
-  render(new CatalogueSortView, containerCatalogueElement);
-  render(new CatalogueCardsListView, containerCatalogueElement);
-
-  const catalogueCardsListElement = catalogueElement.querySelector('.catalogue__list');
-
-  for (let i = 0; i < 6; i++) {
-    render( new CardView, catalogueCardsListElement);
-  }
-
-  render(new CatalogueButtonWrapView, containerCatalogueElement);
-
-  const buttonWrapElement = document.querySelector('.catalogue__btn-wrap');
-  render(new ShowMoreButtonView(), buttonWrapElement);
-  render(new toTopButtonView(), buttonWrapElement);
+  boardPresenter.init();
 
 
+  // render(new CatalogueButtonWrapView, containerCatalogueElement);
+  // const buttonWrapElement = document.querySelector('.catalogue__btn-wrap');
+  // render(new ShowMoreButtonView(), buttonWrapElement);
+  // render(new toTopButtonView(), buttonWrapElement);
 });
