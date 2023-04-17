@@ -35,9 +35,12 @@ window.addEventListener('DOMContentLoaded', () => {
   // Ваш код...
 
   const mainElement = document.querySelector('main');
+  const catalogueElement = document.querySelector('.catalogue');
+
 
   const boardPresenter = new BoardPresenter({
-    boardContainer: mainElement
+    boardContainer: mainElement,
+    catalogueContainer: catalogueElement
   });
 
   boardPresenter.init();

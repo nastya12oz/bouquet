@@ -8,16 +8,19 @@ import CatalogueView from '../view/catalogue-view.js';
 import CatalogueSortView from '../view/catalogue-sort-view.js';
 import CatalogueCardsListView from '../view/catalogue-cards-list-view';
 import CardView from '../view/card-view';
-// import CatalogueButtonWrapView from './view/catalogue-button-wrap-view.js';
-// import ShowMoreButtonView from './view/show-more-button-view.js';
-// import toTopButtonView from './view/to-top-button-view.js';
+import CatalogueButtonWrapView from '../view/catalogue-button-wrap-view.js';
+import ShowMoreButtonView from '../view/show-more-button-view.js';
+import toTopButtonView from '../view/to-top-button-view.js';
 
-// const CARDS_COUNT = 5;
+const CARDS_COUNT = 5;
 
 export default class BoardPresenter {
   #boardContainer = null;
+  #catalogueContainer = null;
 
   #catalogueSortComponent = null;
+  #showMoreButtonComponent = null;
+  #toTopButtonComponent = null;
 
   #heroComponent = new HeroView();
   #missionComponent = new MissionView();
@@ -26,38 +29,44 @@ export default class BoardPresenter {
   #filterReasonComponent = new FilterReasonView();
   #filterColorComponent = new FilterColorView();
 
-  #cardComponent = new CardView();
-
   #catalogueComponent = new CatalogueView();
   #catalogueCardsListComponent = new CatalogueCardsListView();
 
-  constructor({boardContainer}) {
+  #buttonsContainer = new CatalogueButtonWrapView();
+
+  constructor({boardContainer, catalogueContainer}) {
     this.#boardContainer = boardContainer;
+    this.#catalogueContainer = catalogueContainer;
   }
 
   init() {
     this.#renderBoard();
   }
 
-  #renderCatalogueSort() {
+  #renderCatalogue() {
     const catalogueElement = document.querySelector('.catalogue');
     const containerCatalogueElement = catalogueElement.querySelector('.container');
 
     this.#catalogueSortComponent = new CatalogueSortView();
     render(this.#catalogueSortComponent, containerCatalogueElement);
+
+    render(this.#catalogueCardsListComponent, containerCatalogueElement);
+    const catalogueCardsListElement = catalogueElement.querySelector('.catalogue__list');
+
+    for (let i = 0; i < CARDS_COUNT; i++) {
+      render(new CardView(), catalogueCardsListElement);
+    }
+
+    render(this.#buttonsContainer, containerCatalogueElement);
   }
 
-  // #renderCards() {
-  //   const catalogueElement = document.querySelector('.catalogue');
-  //   const containerCatalogueElement = catalogueElement.querySelector('.container');
+  #renderButtons() {
+    this.#showMoreButtonComponent = new ShowMoreButtonView();
+    render(this.#showMoreButtonComponent, this.#buttonsContainer.element);
 
-  //   const catalogueElement = document.querySelector('.catalogue');
-  //   const catalogueCardsListElement = catalogueElement.querySelector('.catalogue__list');
-
-  //   for (let i = 0; i < CARDS_COUNT; i++) {
-  //     render(this.#cardComponent, catalogueCardsListElement);
-  //   }
-  // }
+    this.#toTopButtonComponent = new toTopButtonView();
+    render(this.#toTopButtonComponent, this.#buttonsContainer.element);
+  }
 
   #renderBoard() {
     render(this.#heroComponent, this.#boardContainer);
@@ -67,7 +76,8 @@ export default class BoardPresenter {
     render(this.#filterColorComponent, this.#boardContainer);
     render(this.#catalogueComponent, this.#boardContainer);
 
-    this.#renderCatalogueSort();
+    this.#renderCatalogue();
+    this.#renderButtons();
     // this.#renderCards();
   }
 }
