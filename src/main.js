@@ -3,6 +3,8 @@ import './vendor';
 import { ImageSlider } from './utils/image-slider';
 import { iosVhFix } from './utils/ios-vh-fix';
 import { modals, initModals } from './modals/init-modals';
+import CardsModel from './model/cards-model';
+import CardsApiService from './cards-api-service';
 
 // Ваши импорты...
 import BoardPresenter from './presenter/board-presenter';
@@ -34,20 +36,23 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Ваш код...
 
+  const AUTHORIZATION = 'Basic 456ytfgtj356hg';
+  const END_POINT = 'https://grading.objects.pages.academy/flowers-shop';
+
+  const cardsModel = new CardsModel({
+    cardsApiService: new CardsApiService(END_POINT, AUTHORIZATION)
+  });
+
   const mainElement = document.querySelector('main');
   const catalogueElement = document.querySelector('.catalogue');
 
-
   const boardPresenter = new BoardPresenter({
     boardContainer: mainElement,
-    catalogueContainer: catalogueElement
+    catalogueContainer: catalogueElement,
+    cardsModel
   });
 
+  cardsModel.init();
   boardPresenter.init();
-
-
-  // render(new CatalogueButtonWrapView, containerCatalogueElement);
-  // const buttonWrapElement = document.querySelector('.catalogue__btn-wrap');
-  // render(new ShowMoreButtonView(), buttonWrapElement);
-  // render(new toTopButtonView(), buttonWrapElement);
 });
+

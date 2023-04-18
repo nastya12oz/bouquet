@@ -34,9 +34,18 @@ export default class BoardPresenter {
 
   #buttonsContainer = new CatalogueButtonWrapView();
 
-  constructor({boardContainer, catalogueContainer}) {
+  #cardsModel = null;
+
+  constructor({boardContainer, catalogueContainer, cardsModel}) {
     this.#boardContainer = boardContainer;
     this.#catalogueContainer = catalogueContainer;
+    this.#cardsModel = cardsModel;
+  }
+
+  get cards() {
+    const cards = [...this.#cardsModel.cards];
+
+    return cards;
   }
 
   init() {
