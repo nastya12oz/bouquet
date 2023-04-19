@@ -36,7 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Ваш код...
 
-  const AUTHORIZATION = 'Basic 456ytfgtj356hg';
+  const AUTHORIZATION = 'Basic 456yfgtj356hg';
   const END_POINT = 'https://grading.objects.pages.academy/flowers-shop';
 
   const cardsModel = new CardsModel({

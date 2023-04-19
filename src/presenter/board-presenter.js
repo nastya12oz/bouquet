@@ -12,8 +12,6 @@ import ShowMoreButtonView from '../view/show-more-button-view.js';
 import toTopButtonView from '../view/to-top-button-view.js';
 import CardPresenter from './card-presenter.js';
 
-// const CARDS_COUNT = 5;
-
 export default class BoardPresenter {
   #boardContainer = null;
   #catalogueContainer = null;
@@ -42,10 +40,9 @@ export default class BoardPresenter {
     this.#cardsModel = cardsModel;
   }
 
-  get cards() {
-    const cards = [...this.#cardsModel.cards];
-
-    return cards;
+  async #getCards() {
+    const cards = await this.#cardsModel.getCards();
+    cards.forEach((card) => this.#renderCard(card));
   }
 
   init() {
@@ -59,20 +56,15 @@ export default class BoardPresenter {
     this.#catalogueSortComponent = new CatalogueSortView();
     render(this.#catalogueSortComponent, containerCatalogueElement);
 
-
-    // for (let i = 0; i < CARDS_COUNT; i++) {
-    //   render(new CardView(), catalogueCardsListElement);
-    // }
-
     render(this.#buttonsContainer, containerCatalogueElement);
   }
 
-  #renderCard() {
+  #renderCard(product) {
     const cardPresenter = new CardPresenter({
       cardListContainer: this.#catalogueCardsListComponent.element
     });
 
-    cardPresenter.init();
+    cardPresenter.init(product);
   }
 
   #renderButtons() {
@@ -85,6 +77,7 @@ export default class BoardPresenter {
 
   #renderBoard() {
     const catalogueElement = this.#catalogueComponent.element.querySelector('.container');
+    this.#getCards();
 
     render(this.#heroComponent, this.#boardContainer);
     render(this.#missionComponent, this.#boardContainer);
@@ -96,6 +89,5 @@ export default class BoardPresenter {
 
     this.#renderCatalogue();
     this.#renderButtons();
-    this.#renderCard();
   }
 }

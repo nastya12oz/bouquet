@@ -1,4 +1,5 @@
 import Observable from '../framework/observable.js';
+import {UpdateType} from '../consts.js';
 
 export default class CardsModel extends Observable {
   #cardsApiService = null;
@@ -9,18 +10,18 @@ export default class CardsModel extends Observable {
     this.#cardsApiService = cardsApiService;
   }
 
-  get cards() {
-    return this.#cards;
+  async getCards() {
+    await this.init();
+    const cards = this.#cards;
+    return cards;
   }
 
   async init() {
     try {
       this.#cards = await this.#cardsApiService.cards;
-      console.log(this.#cards);
-
     } catch(err) {
       this.#cards = [];
     }
-
+    this._notify(UpdateType.INIT);
   }
 }

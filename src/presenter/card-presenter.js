@@ -5,6 +5,8 @@ import CardPopupView from '../view/card-popup-view';
 export default class CardPresenter {
   #cardListContainer = null;
 
+  #product = null;
+
   #cardComponent = null;
   #cardPopupComponent = null;
 
@@ -12,11 +14,15 @@ export default class CardPresenter {
     this.#cardListContainer = cardListContainer;
   }
 
-  init() {
+  init(product) {
+    this.#product = product;
+
     const prevCardComponent = this.#cardComponent;
     const prevCardPopupComponent = this.#cardPopupComponent;
 
-    this.#cardComponent = new CardView();
+    this.#cardComponent = new CardView({
+      product: this.#product
+    });
     this.#cardPopupComponent = new CardPopupView();
 
     if (prevCardComponent === null || prevCardPopupComponent === null) {
