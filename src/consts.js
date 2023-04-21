@@ -129,10 +129,6 @@ const ImagePosition = {
 const TRANSITION_DURATION = '700ms';
 const SLIDER_STEP = 1;
 
-const Url = {
-  PRODUCTS: 'products',
-  CART: 'cart',
-};
 
 export {
   AUTHORIZATION,
@@ -154,5 +150,4 @@ export {
   ImagePosition,
   TRANSITION_DURATION,
   SLIDER_STEP,
-  Url,
 };

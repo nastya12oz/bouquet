@@ -44,11 +44,15 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   const mainElement = document.querySelector('main');
+  const bodyElement = document.querySelector('body');
+  const modalElement = document.querySelector('.modal-product');
   const catalogueElement = document.querySelector('.catalogue');
 
   const boardPresenter = new BoardPresenter({
     boardContainer: mainElement,
     catalogueContainer: catalogueElement,
+    modalElement: modalElement,
+    bodyElement: bodyElement,
     cardsModel
   });
 

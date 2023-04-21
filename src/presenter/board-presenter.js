@@ -15,6 +15,8 @@ import CardPresenter from './card-presenter.js';
 export default class BoardPresenter {
   #boardContainer = null;
   #catalogueContainer = null;
+  #bodyElement = null;
+  #modalElement = null;
 
   #catalogueSortComponent = null;
   #showMoreButtonComponent = null;
@@ -34,10 +36,12 @@ export default class BoardPresenter {
 
   #cardsModel = null;
 
-  constructor({boardContainer, catalogueContainer, cardsModel}) {
+  constructor({boardContainer, catalogueContainer, modalElement, cardsModel, bodyElement}) {
     this.#boardContainer = boardContainer;
     this.#catalogueContainer = catalogueContainer;
     this.#cardsModel = cardsModel;
+    this.#bodyElement = bodyElement;
+    this.#modalElement = modalElement;
   }
 
   async #getCards() {
@@ -59,12 +63,15 @@ export default class BoardPresenter {
     render(this.#buttonsContainer, containerCatalogueElement);
   }
 
-  #renderCard(product) {
+  #renderCard(card) {
+
     const cardPresenter = new CardPresenter({
-      cardListContainer: this.#catalogueCardsListComponent.element
+      cardListContainer: this.#catalogueCardsListComponent.element,
+      bodyElement: this.#bodyElement,
+      modalElement: this.#modalElement,
     });
 
-    cardPresenter.init(product);
+    cardPresenter.init(card, this.#cardsModel);
   }
 
   #renderButtons() {
